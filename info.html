@@ -17,7 +17,7 @@
                 <span></span>
             </button>
             <div class="nav-menu">
-                <a href="info.html" class="nav-link active" aria-current="page">Info</a>
+                <a href="info.html" class="nav-link active" aria-current="page">About</a>
                 <a href="mailto:hello@beatrizmarcal.com" class="nav-link">Contact</a>
                 <a href="https://www.linkedin.com/in/beatriz-marcal" target="_blank" rel="noopener noreferrer" class="nav-link">LinkedIn</a>
             </div>
@@ -26,105 +26,65 @@
 
     <main class="info-page">
         <div class="info-container">
-            <!-- About Section -->
-            <section class="info-intro" aria-labelledby="about-heading">
-                <div class="intro-content">
-                    <h1 id="about-heading">Hi there!</h1>
-                    <p class="intro-text">I’m Bea, a graphic and communication designer with a background in physiotherapy, which shaped how I understand human behaviour, needs, and limitations. My work is increasingly focused on product design, as it brings together what I love most: understanding user needs, solving problems, and shaping clear, thoughtful visual systems that meaningfully improve the overall experience.</p>
-                </div>
-                <figure class="intro-figure">
-                    <img src="Project_images/info/3Clowrez.jpg" alt="Beatriz Marçal - Communication Designer" loading="lazy">
-                </figure>
-            </section>
-
-            <div class="info-columns">
+            <div class="info-main-layout">
                 
-                <!-- Experience -->
-                <section class="info-column" aria-labelledby="experience-heading">
-                    <div class="experience-section">
-                        <h2 id="experience-heading">Experience</h2>
+                <!-- Content Column -->
+                <div class="info-content-column">
+                    
+                    <!-- Description -->
+                    <section class="info-description">
+                        <p class="hero-title">I'm Bea, a product-focused designer with a bachelor in graphic and communication design.</p>
+                        <p class="hero-title">With a background in physiotherapy, I combine a strong understanding of human behavior with a focus on systems and requirements, shaping user needs into clear, consistent product solutions.</p>
+                    </section>
+
+                    <!-- Experience, Education, Competence -->
+                    <div class="info-columns">
                         
-                        <article class="experience-item">
-                            <h3>Interaction Designer Trainee</h3>
-                            <p class="role-meta">Nokia · 2025 — Now</p>
-                        </article>
+                        <section class="info-column">
+                            <h2 class="caption">Experience</h2>
+                            <article>
+                                <p class="text-2">Interaction Designer Trainee (2025-Present)</p>
+                                <p class="text-2">Website Designer (2024-2025)</p>
+                                <p class="text-2">UX/UI Internship (2023-4 months)</p>
+                            </article>
+                        </section>
 
-                        <article class="experience-item">
-                            <h3>Website Design & Development</h3>
-                            <p class="role-meta">VSO · 2024 — Now</p>
-                        </article>
+                        <section class="info-column">
+                            <h2 class="caption">Education</h2>
+                            <article>
+                                <p class="text-2">DXD Postgraduation (2025-2026)</p>
+                                <p class="text-2">BA in Communication Design (2022-2025)</p>
+                                <p class="text-2">BSc in Physiotherapy (2015-2019)</p>
+                            </article>   
+                        </section>
 
-                        <article class="experience-item">
-                            <h3>UX/UI Internship</h3>
-                            <p class="role-meta">Noxus Startup · 2023 — 4 mos</p>
-                        </article>
+                        <section class="info-column">
+                            <h2 class="caption">Competence</h2>
+                            <article>
+                                <p class="text-2">User Research & Testing</p>
+                                <p class="text-2">Interaction Design</p>
+                                <p class="text-2">Design Systems</p>
+                            </article>
+                
+                        </section>
+
                     </div>
-                </section>
+                </div>
 
-                <!-- Education -->
-                <section class="info-column" aria-labelledby="education-heading">
-                    <div class="education-section">
-                        <h2 id="education-heading">Education</h2>
-                        
-                        <article class="education-item">
-                            <h3>BA in Communication Design</h3>
-                            <p class="role-meta">Faculty of Fine Arts of the University of Lisbon · 2022 — 2025</p>
-                        </article>
-
-                        <article class="education-item">
-                            <h3>DXD Postgraduation</h3>
-                            <p class="role-meta">Faculty of Fine Arts of the University of Lisbon · 2025 — 2026</p>
-                        </article>
-                    </div>
-                </section>
-
-                <!-- Skills -->
-                <section class="info-column" aria-labelledby="skills-heading">
-                    <div class="skills-section">
-                        <h2 id="skills-heading">Skills</h2>
-                        
-                        <div class="skill-group">
-                            <h3>Software</h3>
-                            <ul>
-                                <li>Figma</li>
-                                <li>Adobe Creative Suite</li>
-                                <li>Procreate</li>
-                                <li>CSS/HTML</li>
-                                <li>React.js <span class="wip">[WIP]</span></li>
-                                <li>JavaScript (P5.js)</li>
-                            </ul>
-                        </div>
-
-                        <div class="skill-group">
-                            <h3>Soft Skills</h3>
-                            <ul>
-                                <li>Proactiveness</li>
-                                <li>Critical Thinking</li>
-                                <li>Curiosity</li>
-                                <li>Willingness to Learn</li>
-                                <li>Attention to Detail</li>
-                            </ul>
-                        </div>
-
-                        <div class="skill-group">
-                            <h3>Languages</h3>
-                            <ul>
-                                <li>Portuguese - Native</li>
-                                <li>English - Fluent</li>
-                                <li>French - Fluent</li>
-                                <li>Spanish - Conversational</li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
+                <!-- Image Column -->
+                <div class="info-image-column">
+                    <figure>
+                        <img src="Project_images/info/3Clowrez.jpg" alt="Beatriz Marçal - Communication Designer" loading="lazy">
+                    </figure>
+                </div>
 
             </div>
         </div>
     </main>
 
     <footer class="footer">
-        <p>Coded and designed by Beatriz Marçal</p>
-        <p>© 2026</p>
+        <p class="caption">Beatriz Marçal Portfolio</p>
+        <p class="caption">© April 2026</p>
     </footer>
 
     <script src="script.js"></script>

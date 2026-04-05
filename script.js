@@ -191,4 +191,72 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // ===========================
+    // Password Protected Projects
+    // ===========================
+    
+    const passwordInput = document.getElementById('passwordInput');
+    const passwordError = document.getElementById('passwordError');
+    const passwordInline = document.querySelector('.password-inline');
+    const lockedProject = document.querySelector('.project-locked');
+    const lockedProjectHeader = lockedProject ? lockedProject.querySelector('.project-header') : null;
+    
+    // Handle clicks on locked project header to toggle password input
+    if (lockedProjectHeader && passwordInline) {
+        lockedProjectHeader.addEventListener('click', function(e) {
+            // Don't toggle if clicking on grid buttons
+            if (e.target.closest('.grid-controls')) return;
+            
+            // Toggle password input visibility
+            if (passwordInline.style.display === 'none' || passwordInline.style.display === '') {
+                passwordInline.style.display = 'flex';
+                setTimeout(() => passwordInput.focus(), 100);
+            } else {
+                passwordInline.style.display = 'none';
+                if (passwordError) {
+                    passwordError.textContent = '';
+                }
+            }
+        });
+    }
+    
+    // Handle Enter key in password input
+    if (passwordInput) {
+        passwordInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                validatePassword();
+            }
+        });
+        
+        // Clear error on typing
+        passwordInput.addEventListener('input', function() {
+            if (passwordError) {
+                passwordError.textContent = '';
+            }
+        });
+    }
+    
+    // Validate password function
+    function validatePassword() {
+        if (!lockedProject || !passwordInput) return;
+        
+        const enteredPassword = passwordInput.value.trim();
+        const correctPassword = lockedProject.getAttribute('data-password');
+        const projectUrl = lockedProject.getAttribute('data-project-url');
+        
+        if (enteredPassword === correctPassword) {
+            // Password correct - redirect to project page
+            if (projectUrl) {
+                window.location.href = projectUrl;
+            }
+        } else {
+            // Password incorrect - show error
+            if (passwordError) {
+                passwordError.textContent = 'Incorrect password';
+            }
+            passwordInput.value = '';
+            passwordInput.focus();
+        }
+    }
 });
