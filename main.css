@@ -195,11 +195,15 @@ ul, ol {
 .nav-toggle {
     display: none;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     gap: 5px;
     background: none;
     border: none;
     cursor: pointer;
     padding: 0;
+    width: 25px;
+    height: 20px;
 }
 
 .nav-toggle span {
@@ -207,6 +211,8 @@ ul, ol {
     height: 2px;
     background-color: var(--text-primary);
     transition: all var(--transition-fast);
+    display: block;
+    transform-origin: center;
 }
 
 /* ===========================
@@ -285,23 +291,39 @@ ul, ol {
 }
 
 .project-card {
-    opacity: 1;
-    transform: scale(1);
-    transition: all var(--transition-normal);
     display: flex;
     flex-direction: column;
     gap: var(--spacing-xs);
     padding-top: var(--spacing-sm);
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-card.filtering-out {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+    pointer-events: none;
+}
+
+.project-card.filtering-in {
+    animation: filterIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes filterIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 .project-card.hidden {
-    opacity: 0;
-    transform: scale(0.98);
-    height: 0;
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
-    border: none;
+    display: none;
 }
 
 .project-link {
@@ -740,7 +762,7 @@ ul, ol {
     
     .nav-menu {
         position: fixed;
-        top: 55px;
+        top: calc(0.6rem * 2 + 1.6rem);
         left: 0;
         right: 0;
         background-color: var(--bg-color);
@@ -751,6 +773,7 @@ ul, ol {
         opacity: 0;
         visibility: hidden;
         transition: all var(--transition-normal);
+        z-index: 999;
     }
     
     .nav-menu.active {
@@ -958,4 +981,50 @@ ul, ol {
 .password-error-inline {
     font-size: var(--font-size-caption);
     min-height: 14px;
+}
+
+/* ===========================
+   Smooth Fade-In Animations
+   =========================== */
+
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.fade-in-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Delay variants for staggered animations */
+.fade-in-up[data-delay="1"] {
+    transition-delay: 0.1s;
+}
+
+.fade-in-up[data-delay="2"] {
+    transition-delay: 0.2s;
+}
+
+.fade-in-up[data-delay="3"] {
+    transition-delay: 0.3s;
+}
+
+.fade-in-up[data-delay="4"] {
+    transition-delay: 0.4s;
+}
+
+.fade-in-up[data-delay="5"] {
+    transition-delay: 0.5s;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .fade-in-up {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
 }

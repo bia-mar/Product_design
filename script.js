@@ -13,9 +13,9 @@ document.addEventListener('DOMContentLoaded', function() {
             // Animate hamburger menu
             const spans = navToggle.querySelectorAll('span');
             if (navMenu.classList.contains('active')) {
-                spans[0].style.transform = 'rotate(45deg) translate(7px, 7px)';
+                spans[0].style.transform = 'translateY(7px) rotate(45deg)';
                 spans[1].style.opacity = '0';
-                spans[2].style.transform = 'rotate(-45deg) translate(7px, -7px)';
+                spans[2].style.transform = 'translateY(-7px) rotate(-45deg)';
             } else {
                 spans[0].style.transform = 'none';
                 spans[1].style.opacity = '1';
@@ -51,26 +51,37 @@ document.addEventListener('DOMContentLoaded', function() {
                 filterChips.forEach(c => c.classList.remove('active'));
                 this.classList.add('active');
                 
-                // Filter projects
+                // Filter projects with smooth animation
                 projectCards.forEach(card => {
                     const categories = card.getAttribute('data-category');
+                    const shouldShow = filter === 'all' || (categories && categories.includes(filter));
                     
-                    if (filter === 'all') {
-                        card.classList.remove('hidden');
-                        setTimeout(() => {
-                            card.style.display = '';
-                        }, 300);
+                    if (shouldShow) {
+                        // Card should be visible
+                        if (card.classList.contains('hidden') || card.classList.contains('filtering-out')) {
+                            // Remove hidden and filtering-out, trigger fade-in animation
+                            card.classList.remove('hidden', 'filtering-out');
+                            // Trigger reflow to restart animation
+                            void card.offsetWidth;
+                            card.classList.add('filtering-in');
+                            
+                            // Remove filtering-in class after animation completes
+                            setTimeout(() => {
+                                card.classList.remove('filtering-in');
+                            }, 600);
+                        }
                     } else {
-                        if (categories && categories.includes(filter)) {
-                            card.classList.remove('hidden');
+                        // Card should be hidden
+                        if (!card.classList.contains('hidden')) {
+                            // Start fade-out animation
+                            card.classList.remove('filtering-in');
+                            card.classList.add('filtering-out');
+                            
+                            // After animation completes, fully hide the card
                             setTimeout(() => {
-                                card.style.display = '';
-                            }, 300);
-                        } else {
-                            card.classList.add('hidden');
-                            setTimeout(() => {
-                                card.style.display = 'none';
-                            }, 300);
+                                card.classList.add('hidden');
+                                card.classList.remove('filtering-out');
+                            }, 500);
                         }
                     }
                 });
@@ -169,28 +180,6 @@ document.addEventListener('DOMContentLoaded', function() {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(setResponsiveGridDefaults, 250);
     });
-    
-    // ===========================
-    // Smooth Scroll for Back Links
-    // ===========================
-    
-    const backLinks = document.querySelectorAll('a[href*="#"]');
-    backLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            if (href.includes('#')) {
-                e.preventDefault();
-                const targetId = href.split('#')[1];
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            }
-        });
-    });
 
     // ===========================
     // Password Protected Projects
@@ -259,4 +248,31 @@ document.addEventListener('DOMContentLoaded', function() {
             passwordInput.focus();
         }
     }
+
+    // ===========================
+    // Smooth Scroll-Triggered Animations
+    // ===========================
+    
+    // Create Intersection Observer for fade-in animations
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                // Optional: stop observing after animation triggers
+                // observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observe all elements with fade-in-up class
+    const animatedElements = document.querySelectorAll('.fade-in-up');
+    animatedElements.forEach(element => {
+        observer.observe(element);
+    });
 });
