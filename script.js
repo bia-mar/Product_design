@@ -3,6 +3,62 @@
 // ===========================
 
 document.addEventListener('DOMContentLoaded', function() {
+    
+    // ===========================
+    // Theme Switching
+    // ===========================
+    
+    const themeToggle = document.querySelector('.theme-toggle');
+    const lightIcon = document.querySelector('.light-icon');
+    const darkIcon = document.querySelector('.dark-icon');
+    const htmlElement = document.documentElement;
+    
+    // Initialize theme
+    function initTheme() {
+        // Check localStorage first
+        const savedTheme = localStorage.getItem('theme');
+        
+        if (savedTheme) {
+            htmlElement.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+        } else {
+            // Check system preference
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = prefersDark ? 'dark' : 'light';
+            htmlElement.setAttribute('data-theme', theme);
+            updateThemeIcon(theme);
+        }
+    }
+    
+    // Update icon visibility
+    function updateThemeIcon(theme) {
+        if (theme === 'dark') {
+            lightIcon.style.display = 'none';
+            darkIcon.style.display = 'block';
+        } else {
+            lightIcon.style.display = 'block';
+            darkIcon.style.display = 'none';
+        }
+    }
+    
+    // Toggle theme
+    function toggleTheme() {
+        const currentTheme = htmlElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        htmlElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcon(newTheme);
+    }
+    
+    // Event listener
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
+    }
+    
+    // Initialize on load
+    initTheme();
+    
     const navToggle = document.querySelector('.nav-toggle');
     const navMenu = document.querySelector('.nav-menu');
     
@@ -275,4 +331,31 @@ document.addEventListener('DOMContentLoaded', function() {
     animatedElements.forEach(element => {
         observer.observe(element);
     });
+    
+    // ===========================
+    // Scroll Progress Bar (Project Pages Only)
+    // ===========================
+    
+    const progressBar = document.querySelector('.scroll-progress-bar');
+    
+    if (progressBar) {
+        function updateProgressBar() {
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // Calculate scroll percentage
+            const scrollableHeight = documentHeight - windowHeight;
+            const scrollPercentage = (scrollTop / scrollableHeight) * 100;
+            
+            // Update progress bar width
+            progressBar.style.width = scrollPercentage + '%';
+        }
+        
+        // Update on scroll
+        window.addEventListener('scroll', updateProgressBar);
+        
+        // Update on page load
+        updateProgressBar();
+    }
 });
